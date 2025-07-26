@@ -2,16 +2,36 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { fetchBlogDataList } from '@/lib/fetchBlogData';
+import Link from 'next/link';
+import { TBlogData } from '../../../types/type';
 
-export default function DemoPage() {
+export default async function DemoPage() {
+  const blogDataList = await fetchBlogDataList(3);
+
   return (
     <div className="container mx-auto p-8 space-y-8">
       <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">UI Components Demo</h1>
+        <h1 className="text-4xl font-bold mb-4">Demo</h1>
         <p className="text-muted-foreground">
-          shadcn/uiコンポーネントの動作確認ページ
+          動作確認ページ
         </p>
       </div>
+      <Link href="/" className="text-blue-600 hover:text-blue-800 underline">
+        トップ
+      </Link>
+
+      {/* Test microCMS Section */}
+      <section className="space-y-4">
+      <h2 className="text-2xl font-semibold">Test microCMS</h2>
+      <div>
+        {blogDataList.map((blogData:TBlogData, index:number) => (
+          <div key={index}>
+            <h3>{blogData.title}</h3>
+          </div>
+        ))}
+      </div>
+      </section>
 
       {/* Button Section */}
       <section className="space-y-4">
